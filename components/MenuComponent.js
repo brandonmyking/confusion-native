@@ -4,6 +4,7 @@ import { ListItem } from 'react-native-elements';
 import { DISHES } from '../shared/dishes';
 
 class Menu extends React.Component {
+    
     constructor(props) {
         super(props);
         this.state = {
