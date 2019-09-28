@@ -37,6 +37,7 @@ function RenderDish (props) {
                     color='#f50'
                     onPress={() => props.favorite ? console.log('Already a favorite') : props.onPress()}
                     ></Icon>
+                    
             </Card>
         );
     }

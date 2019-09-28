@@ -24,5 +24,8 @@
   "devDependencies": {
     "babel-preset-expo": "^6.0.0"
   },
-  "private": true
+  "private": true,
+  "engines": {
+    "yarn": "YARN NO LONGER USED - use npm instead."
+  }
 }

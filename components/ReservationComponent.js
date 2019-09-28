@@ -110,7 +110,7 @@ class Reservation extends React.Component {
                             <Text style={styles.modalText}>Smoking? : {this.state.smoking ? 'Yes' : 'No'}</Text>
                             <Text style={styles.modalText}>Date and Time: {this.state.date}</Text>
                             <Button 
-                                onPress={() => {this.toggleModal(); this.resetForm()}}
+                                onPress={() => {this.toggleModal(); this.resetForm(); console.log('2')}}
                                 color='#512DA8'
                                 title='Close'
                             />
