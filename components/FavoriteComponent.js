@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
 import { Loading } from './LoadingComponent';
 import { deleteFavorite } from '../redux/ActionCreators';
-import Swipeout from 'react-native-swipeout';
 
 const mapStateToProps = state => {
     return {
@@ -36,7 +35,7 @@ class Favorites extends React.Component {
                     onPress: () =>{
                         Alert.alert(
                             'Delete Favorite?',
-                            'Are you sure you wish to delete the favorite dish ' + item.name + ' ?',
+                            'Are you sure you wish to delete the favorite dish ' + item.name + '?',
                             [
                                 {text: 'Cancel', onPress: () => console.log(item.name+ ': Not deleted'), style: 'cancel'},
                                 {text: 'Ok', onPress: () => this.props.deleteFavorite(item.id)}
@@ -48,7 +47,7 @@ class Favorites extends React.Component {
             ];
 
             return(
-                <Swipeout right={rightButton} autoClose={true}>
+                
                     <ListItem 
                         key={index}
                         title={item.name}
@@ -57,7 +56,7 @@ class Favorites extends React.Component {
                         onPress={() => navigate('DishDetail', {dishId: item.id})}
                         leftAvatar={{ source: { uri: baseUrl + item.image }}}
                     />
-                </Swipeout>
+                
             );
         };
 
