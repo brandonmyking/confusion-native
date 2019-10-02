@@ -6,7 +6,7 @@ import { baseUrl } from '../shared/baseUrl';
 import { Loading } from './LoadingComponent';
 import { deleteFavorite } from '../redux/ActionCreators';
 import * as Animatable from 'react-native-animatable';
-import { Swipeout } from 'react-native-swipeout'
+import  Swipeout  from 'react-native-swipeout'
 
 
 const mapStateToProps = state => {
