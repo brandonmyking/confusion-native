@@ -1,4 +1,5 @@
 npm install react-native-swipeout@2.3.3
 npm install react-native-animatable@1.2.4
+npm install redux-persist@5.9.1
 
 json-server --watch db.json -p 3001 -d 2000
