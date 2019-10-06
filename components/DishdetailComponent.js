@@ -32,6 +32,13 @@ function RenderDish (props) {
             return false;
     };
 
+    const recognizeComment = ({moveX, moveY, dx, dy}) => {
+        if (dx > 200)
+            return true;
+        else   
+            return false;
+    };
+
     const panResponder = PanResponder.create({
         onStartShouldSetPanResponder: (e, gestureState) => {
             return true;
@@ -59,6 +66,8 @@ function RenderDish (props) {
                     ],
                     {cancelable: false}
                 )
+                if (recognizeComment(gestureState)) 
+                    props.onShowModal();
             return true;
         }
     });
@@ -199,16 +208,18 @@ class DishDetail extends React.Component {
                                 leftIconContainerStyle={{marginRight: 10}}
                                 onChangeText={(value) => this.setState({comment: value})}
                             />
-                            <Button 
-                                onPress={() => {this.resetForm(); this.handleComment(dishId, this.state.rating, this.state.author, this.state.comment)}}
-                                color='#512DA8'
-                                title='Submit'
-                            />
-                            <Button 
-                                onPress={() => {this.toggleModal(); this.resetForm();}}
-                                color='#BBB'
-                                title='Cancel'
-                            />
+                            <View style={{margin: 10}}>
+                                <Button 
+                                    onPress={() => {this.resetForm(); this.handleComment(dishId, this.state.rating, this.state.author, this.state.comment)}}
+                                    color='#512DA8'
+                                    title='Submit'
+                                />
+                                <Button 
+                                    onPress={() => {this.toggleModal(); this.resetForm();}}
+                                    color='#BBB'
+                                    title='Cancel'
+                                />
+                            </View>
                         </View>
                 </Modal>
             </ScrollView>

@@ -18,7 +18,7 @@ export const ConfigureStore = () => {
     };
 
     const store = createStore(
-        persistCombineReducers(confic, {
+        persistCombineReducers(config, {
             dishes,
             comments,
             promotions,
