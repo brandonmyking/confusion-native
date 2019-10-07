@@ -3,6 +3,8 @@ import { Text, View, ScrollView, StyleSheet, Picker, Switch, Button, Modal, Aler
 import { Card } from 'react-native-elements';
 import DatePicker from 'react-native-datepicker';
 import * as Animatable from 'react-native-animatable';
+import { Notifications} from 'expo';
+import * as Permissions  from 'expo-permissions';
 
 class Reservation extends React.Component {
     constructor(props) {
@@ -10,17 +12,12 @@ class Reservation extends React.Component {
         this.state = {
             guest: 1,
             smoking: false,
-            date: '',
-            showModal: false
+            date: ''
         }
     }
 
     static navigationOptions = {
         title: 'Reserve Table'
-    }
-
-    toggleModal() {
-        this.setState({showModal: !this.state.showModal})
     }
 
     alertReservation() {
@@ -43,17 +40,50 @@ class Reservation extends React.Component {
 
     handleReservation() {
         console.log(JSON.stringify(this.state));
+        this.presentLocalNotification(this.state.date);
         this.resetForm();
 
     }
 
     resetForm() {
         this.setState({
-            guests: 1,
+            guest: 1,
             smoking: false,
             date: ''
         });
     }
+
+    async obtainNotificationPermission() {
+        let permission = await Permissions.getAsync(Permissions.USER_FACING_NOTIFICATIONS)
+        if (permission.status !== 'granted') {
+            permission = await Permissions.askAsync(Permissions.USER_FACING_NOTIFICATIONS);
+            if (permission.status !== 'granted') {
+                Alert.alert('Permission not granted to show notification');
+            }
+        }
+        return permission;
+    }
+
+
+    async presentLocalNotification(date) {
+        let notification = {
+            title: 'Your Reservation',
+                body: 'Reservation for ' + date + ' requested',
+                ios: {
+                    sound: true,
+                    _displayInForeground: true
+                },
+                android: {
+                    sound: true,
+                    vibrate: true,
+                    color: '#512DA8'
+                },
+
+        };
+        await this.obtainNotificationPermission();
+        Notifications.presentLocalNotificationAsync(notification);
+    }
+
 
     render() {
         return(
