@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, ScrollView, StyleSheet, Modal, Button, Alert, PanResponder} from 'react-native';
+import { View, Text, FlatList, ScrollView, StyleSheet, Modal, Button, Alert, PanResponder, Share} from 'react-native';
 import { Card, Icon, Rating, Input } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
@@ -72,6 +72,16 @@ function RenderDish (props) {
         }
     });
 
+    const shareDish = (title, message, url) => {
+        Share.share({
+            title: title,
+            message: title + ': ' + message + ' ' + url,
+            url: url
+        }, {
+            diaglogTitle: 'Share ' + title
+        });
+    }
+
     if(dish != null) {
         return(
             <Animatable.View animation='fadeInDown' duration={2000} delay={1000} ref={this.handleViewRef} {...panResponder.panHandlers}>
@@ -90,8 +100,7 @@ function RenderDish (props) {
                             name={props.favorite ? 'heart' : 'heart-o'}
                             color='#f50'
                             onPress={() => props.favorite ? console.log('Already a favorite') : props.onPress()}
-                            >
-                        </Icon>
+                        />
                         <Icon
                             style={styles.cardItem}
                             type='font-awesome'
@@ -100,11 +109,17 @@ function RenderDish (props) {
                             name='pencil'
                             color='#512DA8'
                             onPress={() => props.onShowModal()}
-                        >
-                        </Icon>
-                    </View>
-                    
-                        
+                        />
+                        <Icon 
+                            raised
+                            reverse
+                            name='share'
+                            type='font-awesome'
+                            color='#51D2A8'
+                            style={styles.cardItem}
+                            onPress={() => shareDish(dish.name, dish.description, baseUrl+dish.image)}
+                        />
+                    </View>        
                 </Card>
             </Animatable.View>
         );
