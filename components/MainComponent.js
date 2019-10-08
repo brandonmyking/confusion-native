@@ -12,6 +12,7 @@ import { createStackNavigator, createDrawerNavigator, SafeAreaView, DrawerItems 
 import { Icon } from 'react-native-elements';
 import { connect } from  'react-redux';
 import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
+import { DISHES } from '../shared/dishes';
 
 const mapDispatchToProps = dispatch => ({
     fetchDishes: () => dispatch(fetchDishes()),
