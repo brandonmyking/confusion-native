@@ -10,6 +10,7 @@
   "dependencies": {
     "expo": "^34.0.1",
     "expo-asset": "^6.0.0",
+    "expo-calendar": "^6.0.0",
     "expo-image-manipulator": "^6.0.0",
     "expo-image-picker": "^6.0.0",
     "expo-mail-composer": "^6.0.0",
@@ -21,6 +22,7 @@
     "react-native-animatable": "^1.2.4",
     "react-native-datepicker": "1.7.2",
     "react-native-elements": "1.0.0",
+    "react-native-simple-toast": "^0.1.1",
     "react-native-swipeout": "^2.3.3",
     "react-native-web": "^0.11.4",
     "react-navigation": "2.0.1",

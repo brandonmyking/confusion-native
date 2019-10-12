@@ -7,12 +7,16 @@ import DishDetail from './DishdetailComponent';
 import Reservation from './ReservationComponent';
 import Favorites from './FavoriteComponent';
 import Login from './LoginComponent';
-import { View, Platform, ScrollView, Image, Text, StyleSheet } from 'react-native';
+import { View, Platform, ScrollView, Image, Text, StyleSheet, NetInfo, ToastAndroid, Alert } from 'react-native';
 import { createStackNavigator, createDrawerNavigator, SafeAreaView, DrawerItems } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import { connect } from  'react-redux';
 import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
-import { DISHES } from '../shared/dishes';
+
+let toast;
+if(Platform.OS === 'android') {
+    toast = require('ToastAndroid');
+}
 
 const mapDispatchToProps = dispatch => ({
     fetchDishes: () => dispatch(fetchDishes()),
@@ -283,6 +287,43 @@ class Main extends React.Component {
         this.props.fetchComments();
         this.props.fetchLeaders();
         this.props.fetchPromos();
+
+        NetInfo.getConnectionInfo()
+            .then(connectionInfo => {
+                (Platform.OS === 'ios') ?
+                    Alert.alert('Initial Connectivity Type:',
+                    connectionInfo.type + ', effictveType: ' + connectionInfo.effectiveType)
+                    : toast.show('Initial Connectivity Type:' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType, toast.LONG)
+            });
+        
+        NetInfo.addEventListener('connectionChange', this.handleConnectivityChange);
+    }
+
+    componentWillUnmount() {
+        NetInfo.removeEventListener('connectionChange', this.handleConnectivityChange)
+    }
+
+    handleConnectivityChange = (connectionInfo) => {
+        switch (connectionInfo.type) {
+            case 'none':
+                (Platform.OS === 'ios') ? Alert.alert('Offline', 'You are now offline!')
+                :toast.show('You are now offline!', toast.LONG);
+                break;
+            case 'wifi':
+                (Platform.OS === 'ios') ? Alert.alert('WiFi', 'You are now connected to WiFi!')
+                : toast.show('You are now connected to WiFi!', toast.LONG);
+                break;
+            case 'cellular':
+                (Platform.OS === 'ios') ? Alert.alert('Cellular', 'You are now connected to Cellular!')
+                : toast.show('You are now connected to Cellular!', toast.LONG);
+                break;
+            case 'unknown':
+                (Platform.OS === 'ios') ? Alert.alert('Unknown', 'You are now have an unknown connection!')
+                : toast.show('You are now have an unknown connection!', Toast.LONG);
+                break;
+            default:
+                break;
+        }
     }
 
     render() {
